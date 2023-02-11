@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+    echo "Usage: setg VariableName=Value"
+    exit 0
+fi
+
+file="/home/linux/.zshrc"
+
+isExists=`echo $1 |cut -d "=" -f 1`
+
+if grep -q $isExists "$file"
+then
+    sed -i "/$isExists/d" $file
+    echo "$1">>$file    
+else
+    echo "$1">>$file    
+fi
+zsh
