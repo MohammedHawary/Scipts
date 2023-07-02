@@ -1,5 +1,9 @@
 #! /usr/bin/python
 import os
+import sys
+
+if len(sys.argv) == 2:
+    python_v = sys.argv[1]
 
 try:
     import pyautogui as x
@@ -16,7 +20,7 @@ def on_press(key):
     if str(key) == "'s'":
         x.press("backspace")
         x.sleep(.5)
-        x.write("\npython -c 'import pty;pty.spawn(\"/bin/bash\")'\n")
+        x.write(f"\n{python_v} -c 'import pty;pty.spawn(\"/bin/bash\")'\n")
         x.sleep(.5)
         x.write("export TERM=xterm;\n")
         x.sleep(.5)

@@ -1,0 +1,17 @@
+#! /bin/python
+import pyautogui as x
+import os
+
+x.hotkey("win","pgdn")
+x.sleep(.5)
+x.hotkey("ctrl","shift","a")
+x.sleep(2)
+x.write("sudo openvpn /home/linux/Desktop/Start-TryHackme/MohammedHawary.ovpn\n")
+x.sleep(.5)
+x.write("linux\n")
+x.sleep(.5)
+x.hotkey("win","pgup")
+x.sleep(.5)
+#x.hotkey("ctrl","shift","a")
+x.sleep(.5)
+os.system("firefox https://tryhackme.com/login >/tmp/null 2>/tmp/null&")
