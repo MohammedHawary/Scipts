@@ -5,7 +5,9 @@ if [ "$EUID" -ne 0 ]
 fi
 pip install -r "requirements.txt"
 chmod 777 *
-mv setg /bin
-mv interactive_shell /bin
+for i in `ls |grep -v setup.sh`
+do
+  mv $i /bin
+done
 
 echo "All done "
