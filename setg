@@ -6,7 +6,7 @@ then
     exit 0
 fi
 
-file="/home/linux/.zshrc"
+file="/home/`whoami`/.zshrc"
 
 isExists=`echo $1 |cut -d "=" -f 1`
 
