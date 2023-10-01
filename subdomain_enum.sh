@@ -84,18 +84,24 @@ enumeration(){
     if [ ! -d "$directory_name" ]; then
     mkdir "$directory_name"
     fi
-
-    while IFS= read -r domain; do
+    chmod 777 "Live_subdomains"
+    chmod 777 "tools_output"
+    
+    while IFS= read -r Rdomain; do
+        domain="${Rdomain// /}"
         echo "$(green) $domain subdomain enumeration... "
         subfinder -d $domain -o tools_output/"$domain subf.txt" 2> /dev/null > /dev/null
         echo $domain | haktrails subdomains > tools_output/"$domain haksubs.txt" 2> /dev/null
         assetfinder -subs-only $domain > tools_output/"$domain asset.txt" 2> /dev/null
         cat tools_output/"$domain subf.txt" tools_output/"$domain haksubs.txt" tools_output/"$domain asset.txt" | sort -u > tools_output/"$domain subdomains.txt" 2> /dev/null
-        httpx -l tools_output/"$domain subdomains.txt" -o Live_subdomains/activesubs.txt -threads 200 -status-code -follow-redirects 2> /dev/null > /dev/null 
+        httpx -l tools_output/"$domain subdomains.txt" -o "Live_subdomains/$domain activesubs_WithStatusCode.txt" -threads 200 -status-code -follow-redirects 2> /dev/null > /dev/null 
+        while read line
+        do
+            cleaned_string=$(echo "$line" | sed -E 's/(https?:\/\/[^ ]+).*/\1/')
+            echo "$cleaned_string" >> "Live_subdomains/$domain activesubs_WithoutStatusCode.txt"
+        done< "Live_subdomains/$domain activesubs_WithStatusCode.txt"
         echo "$(green) $domain => subdomins enumeration done"
     done < $1
-    chmod 777 "Live_subdomains"
-    chmod 777 "tools_output"
 }
 
 
